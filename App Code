@@ -1,0 +1,585 @@
+import React, { Component } from 'react';
+import { AppRegistry, Text, View, StyleSheet, Image, TextInput, ImageBackground, TouchableHighlight, Alert, Dimensions } from 'react-native';
+import Constants from 'expo-constants';
+
+let deviceHeight = Dimensions.get('window').height;
+let deviceWidth = Dimensions.get('window').width;
+
+export default class App extends Component {
+    
+    state = {
+        p1: 0,
+        p2: 0,
+        wrestler1: 'Mark stuart',
+        wrestler2: 'Joey Diaz',
+        score: 'flex',
+        teams: 'none',
+        stand: 'none',
+        weight: '132',
+        leftW: 0,
+        rightW: 0,
+        leftT: 0,
+        rightT: 0,
+        leftL: 0,
+        rightL: 0,
+        p1W: 0,
+        p1T: 0,
+        p1L: 0,
+        p2W: 0,
+        p2T: 0,
+        p2L: 0,
+    }
+    
+    scoreD = () => 
+        this.setState(state => 
+        ({
+            score: 'flex',
+            teams: 'none',
+            stand: 'none',
+        })
+    );
+    teamsD = () => 
+        this.setState(state => 
+        ({
+            score: 'none',
+            teams: 'flex',
+            stand: 'none',
+        })
+    );
+    standingsD = () => 
+        this.setState(state => 
+        ({
+            score: 'none',
+            teams: 'none',
+            stand: 'flex',
+        })
+    );
+    
+    p1T = () => {
+        this.setState({
+            p1: this.state.p1 + 2
+        })
+    }
+    
+    p2T = () => {
+        this.setState({
+            p2: this.state.p2 + 2
+        })
+    }
+    
+    p1E = () => {
+        this.setState({
+            p1: this.state.p1 + 1
+        })
+    }
+    
+    p2E = () => {
+        this.setState({
+            p2: this.state.p2 + 1
+        })
+    }
+    
+    p1B = () => {
+        this.setState({
+            p1: this.state.p1 + 1
+        })
+    }
+    
+    p2B = () => {
+        this.setState({
+            p2: this.state.p2 + 1
+        })
+    }
+    
+    p1P = () => {
+        this.setState({
+            p1: this.state.p1 + 6
+        })
+    }
+    
+    p2P = () => {
+        this.setState({
+            p2: this.state.p2 + 6
+        })
+    }
+    
+    p1R = () => {
+        this.setState({
+            p1: this.state.p1 - 1
+        })
+    }
+    
+    p2R = () => {
+        this.setState({
+            p2: this.state.p2 - 1
+        })
+    }
+    matchEnd = () => {
+        if (this.state.p1 > this.state.p2) {
+            this.setState({
+                p1W: this.state.p1W + 1,
+                p2L: this.state.p2L + 1,
+                p1: 0,
+                p2: 0,
+            })
+        } else if (this.state.p1 == this.state.p2) {
+            this.setState({
+                p1T: this.state.p1T + 1,
+                p2T: this.state.p2T + 1,
+                p1: 0,
+                p2: 0,
+            })
+        } else {
+            this.setState({
+                p1L: this.state.p1L + 1,
+                p2W: this.state.p2W + 1,
+                p1: 0,
+                p2: 0,
+            })
+        }
+    }
+    
+    render() {
+        return (
+            <View style={styles.container}>
+                <View style={styles.title}>
+                    <Text style={styles.titleText}>
+                        Wrestling Scorekeeper
+                    </Text>
+                </View>
+                <View style={{display: this.state.stand}}>
+                    <View style={styles.displayBox2}>
+                        <View style={styles.teamTitle2}>
+                            <Text style={styles.teamTitleText}>
+                                Wrestler Win/Loss Record
+                            </Text>
+                        </View>
+                        <View style={styles.standingsBox}>
+                            <View style={styles.standingsTextBox}>
+                                <Text style={styles.standingsTitle}>
+                                    Win / Tie / Loss
+                                </Text>
+                            </View>
+                            <View style={styles.standingsTextBox}>
+                                <Text style={styles.standingsText}>
+                                    {this.state.wrestler1}: {this.state.p1W}-{this.state.p1T}-{this.state.p1L}
+                                </Text>
+                            </View>
+                            <View style={styles.standingsTextBox}>
+                                <Text style={styles.standingsText}>
+                                    {this.state.wrestler2}: {this.state.p2W}-{this.state.p2T}-{this.state.p2L}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                
+                <View style={{display: this.state.score}}>
+                    <View style={styles.displayBox}>
+                        <View style={styles.wrestlerContainer}>
+                            <View style={styles.wrestlerL}>
+                                <Text style={styles.wrestlerLText}>
+                                    {this.state.wrestler1}
+                                </Text>
+                            </View>
+                            <View style={styles.mid}>
+                                <View style={styles.weightBox}>
+                                    <Text style={styles.weightText}>
+                                        {this.state.weight}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.wrestlerR}>
+                                <Text style={styles.wrestlerRText}>
+                                    {this.state.wrestler2}
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={styles.wrestlerContainer2}>
+                            <Text style={styles.score}>
+                                {this.state.p1}
+                            </Text>
+                            <Text style={styles.score}>
+                                {this.state.p2}
+                            </Text>
+                        </View>
+                        <View style={{alignItems: 'center'}}>
+                            <View style={styles.buttonBox}>
+                                <View style={styles.leftButtons}>
+                                
+                                    <TouchableHighlight
+                                        onPress = {this.p1T}>
+                                        <View style={styles.button}>
+                                            <Text style={styles.buttonText}>
+                                                Takedown
+                                            </Text>
+                                        </View>
+                                    </TouchableHighlight>
+                                    
+                                    <TouchableHighlight
+                                        onPress = {this.p1E}>
+                                        <View style={styles.button}>
+                                            <Text style={styles.buttonText}>
+                                                Escape
+                                            </Text>
+                                        </View>
+                                    </TouchableHighlight>
+                                    
+                                    <TouchableHighlight
+                                        onPress = {this.p1B}>
+                                        <View style={styles.button}>
+                                            <Text style={styles.buttonText}>
+                                                Backpoints
+                                            </Text>
+                                        </View>
+                                    </TouchableHighlight>
+                                
+                                    <TouchableHighlight
+                                        onPress = {this.p1P}>
+                                        <View style={styles.button}>
+                                            <Text style={styles.buttonText}>
+                                                Pin
+                                            </Text>
+                                        </View>
+                                    </TouchableHighlight>
+                                    
+                                    <TouchableHighlight
+                                        onPress = {this.p1R}>
+                                        <View style={styles.button}>
+                                            <Text style={styles.buttonText}>
+                                                Remove Point
+                                            </Text>
+                                        </View>
+                                    </TouchableHighlight>
+                                </View>
+                                <View style={styles.rightButtons}>
+                                    <TouchableHighlight
+                                        onPress = {this.p2T}>
+                                        <View style={styles.button}>
+                                            <Text style={styles.buttonText}>
+                                                Takedown
+                                            </Text>
+                                        </View>
+                                    </TouchableHighlight>
+                                    
+                                    <TouchableHighlight
+                                        onPress = {this.p2E}>
+                                        <View style={styles.button}>
+                                            <Text style={styles.buttonText}>
+                                                Escape
+                                            </Text>
+                                        </View>
+                                    </TouchableHighlight>
+                                    
+                                    <TouchableHighlight
+                                        onPress = {this.p2B}>
+                                        <View style={styles.button}>
+                                            <Text style={styles.buttonText}>
+                                                Backpoints
+                                            </Text>
+                                        </View>
+                                    </TouchableHighlight>
+                                    
+                                    <TouchableHighlight
+                                        onPress = {this.p2P}>
+                                        <View style={styles.button}>
+                                            <Text style={styles.buttonText}>
+                                                Pin
+                                            </Text>
+                                        </View>
+                                    </TouchableHighlight>
+                                    
+                                    <TouchableHighlight
+                                        onPress = {this.p2R}>
+                                        <View style={styles.button}>
+                                            <Text style={styles.buttonText}>
+                                                Remove Point
+                                            </Text>
+                                        </View>
+                                    </TouchableHighlight>
+                                </View>
+                            </View>
+                            <TouchableHighlight
+                                onPress = {this.matchEnd}>
+                                <View style={styles.button2}>
+                                    <Text style={styles.buttonText2}>
+                                        SubmitScores
+                                    </Text>
+                                </View>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                </View>
+                
+                <View style={{display: this.teams}}>
+                    <View style={styles.displayBox2}>
+                        <View style={styles.teamTitle}>
+                            <Text style={styles.teamTitleText}>
+                                Change Wrestler Names and Weight Class
+                            </Text>
+                        </View>
+                        <View style={styles.inputBoxes}>
+                            <View style={styles.inputBox}>
+                                <TextInput style={styles.wrestlerInput}
+                                    onChangeText={(wrestler1) => this.setState({wrestler1})}
+                                    value={this.state.wrestler1}
+                                    placeholder = 'Wrestler 1'
+                                />
+                            </View>
+                            <View style={styles.inputBox}>
+                                <TextInput style={styles.wrestlerInput}
+                                    onChangeText={(wrestler2) => this.setState({wrestler2})}
+                                    value={this.state.wrestler2}
+                                    placeholder = 'Wrestler 2'
+                                />
+                            </View>
+                            <View style={styles.inputBox}>
+                                <TextInput style={styles.wrestlerInput}
+                                    onChangeText={(weight) => this.setState({weight})}
+                                    value={this.state.weight}
+                                    placeholder = '163'
+                                />
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={styles.navBar}>
+                    <TouchableHighlight 
+                        style={styles.navButton}
+                        onPress={this.scoreD}
+                    >
+                        <Text style={styles.navText}>
+                            Score
+                        </Text>
+                    </TouchableHighlight>
+                    <View style={{height: deviceHeight * 0.15, width: deviceWidth * 0.035,}}>
+                    </View>
+                    <TouchableHighlight 
+                        style={styles.navButton}
+                        onPress={this.teamsD}
+                    >
+                        <Text style={styles.navText}>
+                            Wrestler Selection
+                        </Text>
+                    </TouchableHighlight>
+                    <View style={{height: deviceHeight * 0.15, width: deviceWidth * 0.035,}}>
+                    </View>
+                    <TouchableHighlight 
+                        style={styles.navButton}
+                        onPress={this.standingsD}
+                    >
+                        <Text style={styles.navText}>
+                            Standings
+                        </Text>
+                    </TouchableHighlight>
+                </View>
+            </View>
+        
+      );
+   }
+}
+
+const styles = StyleSheet.create({
+    standingsBox: {
+        height: deviceHeight * 0.4,
+        width: deviceWidth * 0.8,
+        backgroundColor: 'white',
+        borderWidth: 2,
+    },
+    standingsTextBox: {
+        flex: 1,
+    },
+    standingsTitle: {
+        fontSize: deviceHeight * 0.055,
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    standingsText: {
+        fontSize: deviceHeight * 0.04,
+        textAlign: 'center',
+    },
+    inputBoxes: {
+        height: deviceHeight * 0.3,
+        width: deviceWidth * 0.8,
+        justifyContent: 'space-evenly'
+    },
+    inputBox: {
+        height: deviceHeight * 0.075,
+        width: deviceWidth * 0.8,
+        justifyContent: 'space-evenly',
+        backgroundColor: 'white',
+        borderWidth: 2,
+        
+    },
+    teamTitle: {
+        height: deviceHeight * 0.2,
+        width: deviceWidth * 0.8,
+    },
+    teamTitle2: {
+        height: deviceHeight * 0.125,
+        width: deviceWidth * 0.8,
+    },
+    wrestlerInput: {
+        fontSize: deviceWidth * 0.06,
+        color: 'black',
+        textAlign: 'center',
+    },
+    teamTitleText: {
+        fontSize: deviceWidth * 0.08,
+        color: 'white',
+        textAlign: 'center',
+    },
+    container: {
+        flex: 1,
+        backgroundColor: '#56a0d3',
+    },
+    displayBox: {
+        height: deviceHeight * 0.69,
+        width: deviceWidth,
+    },
+    displayBox2: {
+        height: deviceHeight * 0.69,
+        width: deviceWidth,
+        alignItems: 'center',
+    },
+    navBar: {
+        height: deviceHeight * 0.13,
+        width: deviceWidth,
+        backgroundColor: '#3e779e',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: 'white',
+        borderTopWidth: deviceWidth * 0.01,
+    },
+    navButton: {
+        height: deviceHeight * 0.08,
+        width: deviceWidth * 0.3,
+        borderWidth: deviceWidth * 0.01,
+        borderColor: 'white',
+        backgroundColor: '#56a0d3',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    navText: {
+        fontSize: deviceWidth * 0.05,
+        color: 'white',
+        textAlign: 'center',
+    },
+    title: {
+        height: deviceHeight * 0.18,
+        width: deviceWidth,
+        borderBottomWidth: deviceWidth * 0.01,
+        borderColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#3e779e',
+    },
+    titleText: {
+        textAlign: 'center',
+        color: "white",
+        fontSize: deviceHeight * 1/15,
+        fontWeight: 'bold',
+    },
+    wrestlerContainer: {
+        height: deviceHeight * 0.05,
+        width: deviceWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    wrestlerContainer2: {
+        height: deviceHeight * 1/19,
+        width: deviceWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    wrestlerLText: {
+        color: 'white',
+        fontSize: deviceHeight * 0.03,
+        textAlign: 'right',
+        width: deviceWidth * 0.38,
+        marginRight: deviceWidth * 0.02,
+    },
+    mid: {
+        height: deviceHeight * 0.05,
+        width: deviceWidth * 0.15,
+        alignItems: 'center',
+    },
+    weightBox: {
+        height: deviceHeight * 0.05,
+        width: deviceWidth * 0.15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: deviceWidth * 0.005,
+        borderColor: 'white',
+    },
+    weightText: {
+        fontSize: deviceHeight * 0.03,
+        color: 'white',
+    },
+    wrestlerRText: {
+        color: 'white',
+        fontSize: deviceHeight * 0.03,
+        textAlign: 'left',
+        width: deviceWidth * 0.38,
+        marginLeft: deviceWidth * 0.02,
+    },
+    score: {
+        color: 'white',
+        fontSize: deviceHeight * 0.065,
+        textAlign: 'center',
+        marginTop: deviceHeight * 1/16,
+        width: deviceWidth * 0.45,
+    },
+    
+    buttonBox: {
+        flexDirection: 'row',
+        width: deviceWidth * 0.9,
+        height: deviceHeight * 0.45,
+        marginTop: deviceHeight * 0.058,
+        borderColor: 'white',
+        borderTopWidth: 1,
+        
+    },
+    leftButtons: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-evenly'
+    },
+    rightButtons: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-evenly'
+    },
+    button: {
+        height: deviceHeight / 2 * (1/8),
+        width: deviceWidth * 0.35,
+        backgroundColor: '#56a0d3',
+        borderColor: 'white',
+        borderWidth: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    button2: {
+        height: deviceHeight / 2 * (1/8),
+        width: deviceWidth * 0.35,
+        backgroundColor: 'white',
+        borderColor: '#3e779e',
+        borderWidth: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: deviceHeight * 0.025,
+        textAlign: 'center',
+    },
+    buttonText2: {
+        color: '#3e779e',
+        fontSize: deviceHeight * 0.025,
+        textAlign: 'center',
+    },
+})
